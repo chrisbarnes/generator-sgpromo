@@ -1,12 +1,12 @@
-# Generator Bootstrap Less [![Build Status](https://travis-ci.org/Thomas-Lebeau/generator-bootstrap-less.png?branch=master)](https://travis-ci.org/Thomas-Lebeau/generator-bootstrap-less)
+# Generator Bootstrap Less - for SunGard Promos
 A Generator for Yeoman to work with the Less version of Bootstrap
 
 
 ## Getting started
 - Make sure you have [yo](https://github.com/yeoman/yo) installed:
     `npm install -g yo`
-- Install the generator: `npm install generator-bootstrap-less`
-- Run: `yo bootstrap-less` to scaffold your project
+- Install the generator: `npm install https://github.com/chrisbarnes/generator-sgpromo/tarball/master`
+- Run: `yo sgpromo` to scaffold your project
 - Run `grunt` for building and `grunt serve` for preview
 
 #### Previous release:
