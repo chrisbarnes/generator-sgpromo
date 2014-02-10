@@ -35,7 +35,8 @@ BootstrapLessGenerator.prototype.askFor = function askFor() {
   // welcome message
   console.log(this.yeoman);
 
-  var prompts = [{
+  var prompts = [
+  {
     type: 'checkbox',
     name: 'features',
     message: 'What more would you like?',
@@ -48,12 +49,20 @@ BootstrapLessGenerator.prototype.askFor = function askFor() {
       value: 'fontawesome',
       checked: false
     }]
-  }];
+  },
+  {
+    type: 'confirm',
+    name: 'needJS',
+    message: 'Will this promo need js?',
+    default: false
+  }
+  ];
 
   this.prompt(prompts, function (answers) {
     var features = answers.features;
     this.jsBootstrap = features.indexOf('jsBootstrap') !== -1;
     this.fontawesome = features.indexOf('fontawesome') !== -1;
+    this.needJS = answers.needJS;
 
     cb();
   }.bind(this));
@@ -99,8 +108,6 @@ BootstrapLessGenerator.prototype.mainStylesheet = function mainStylesheet() {
     html = html + '@import "../bower_components/font-awesome/less/font-awesome.less";\n@fa-font-path: "../fonts/font-awesome";\n\n';
   }
 
-  html = html + '.browsehappy {\n  margin: 0.2em 0; \n  background: #ccc; \n  color: #000; \n  padding: 0.2em 0; \n}\n\n';
-  html = html + '.jumbotron {\n  margin: 50px auto 0 auto;\n}';
   this.write('app/styles/main.less', html);
 };
 
@@ -109,43 +116,48 @@ BootstrapLessGenerator.prototype.writeIndex = function writeIndex() {
   var defaults = ['HTML5 Boilerplate', 'Bootstrap'];
   var contentText = [
     '    <div class="container">',
-    '      <div class="jumbotron">',
+    '      <div class="jumbotron"  style="background: url(http://financialsystems.sungard.com/App_Themes/Default/HeaderBar2/header-bar.png) center top repeat-x;">',
     '        <h1>\'Allo, \'Allo!</h1>',
     '        <p>You now have</p>',
     '        <ul>'
   ];
 
-  this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
-    'bower_components/jquery/jquery.js',
-    'scripts/main.js',
-    'scripts/hello.js'
-  ]);
-
-
-  if (this.jsBootstrap) {
-    // wire Bootstrap plugins
-    this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor/bootstrap.js', [
-      'bower_components/bootstrap/js/affix.js',
-      'bower_components/bootstrap/js/alert.js',
-      'bower_components/bootstrap/js/dropdown.js',
-      'bower_components/bootstrap/js/tooltip.js',
-      'bower_components/bootstrap/js/modal.js',
-      'bower_components/bootstrap/js/transition.js',
-      'bower_components/bootstrap/js/button.js',
-      'bower_components/bootstrap/js/popover.js',
-      'bower_components/bootstrap/js/carousel.js',
-      'bower_components/bootstrap/js/scrollspy.js',
-      'bower_components/bootstrap/js/collapse.js',
-      'bower_components/bootstrap/js/tab.js'
+  if (this.needJS){
+     this.indexFile = this.appendScripts(this.indexFile, 'scripts/main.js', [
+      'bower_components/jquery/jquery.js',
+      'scripts/main.js',
+      'scripts/hello.js'
     ]);
   }
+
+  if (this.needJS){
+    if (this.jsBootstrap) {
+      // wire Bootstrap plugins
+      this.indexFile = this.appendScripts(this.indexFile, 'scripts/vendor/bootstrap.js', [
+        'bower_components/bootstrap/js/affix.js',
+        'bower_components/bootstrap/js/alert.js',
+        'bower_components/bootstrap/js/dropdown.js',
+        'bower_components/bootstrap/js/tooltip.js',
+        'bower_components/bootstrap/js/modal.js',
+        'bower_components/bootstrap/js/transition.js',
+        'bower_components/bootstrap/js/button.js',
+        'bower_components/bootstrap/js/popover.js',
+        'bower_components/bootstrap/js/carousel.js',
+        'bower_components/bootstrap/js/scrollspy.js',
+        'bower_components/bootstrap/js/collapse.js',
+        'bower_components/bootstrap/js/tab.js'
+      ]);
+    }
+  }
+  
 
   if (this.fontawesome) {
     defaults.push('Font Awesome <i class="fa fa-flag"></i>');
   }
 
-  this.mainJsFile = 'console.log(\'\\\'Allo \\\'Allo!\');';
-  this.mainCoffeeFile = 'console.log "\'Allo from CoffeeScript!"';
+  if (this.needJS){
+    this.mainJsFile = 'console.log(\'\\\'Allo \\\'Allo!\');';
+  }
 
   // iterate over defaults and create content string
   defaults.forEach(function (el) {
@@ -155,6 +167,7 @@ BootstrapLessGenerator.prototype.writeIndex = function writeIndex() {
   contentText = contentText.concat([
     '        </ul>',
     '        <p>installed.</p>',
+    '        <p>This also inherits a recent version of the production styles from http://financialsystems.sungard.com to help make development easier.</p>',
     '        <h3>Enjoy coding! - Yeoman</h3>',
     '      </div>',
     '    </div>',
@@ -171,6 +184,7 @@ BootstrapLessGenerator.prototype.app = function app() {
   this.mkdir('app/styles');
   this.mkdir('app/images');
   this.write('app/index.html', this.indexFile);
-  this.write('app/scripts/hello.coffee', this.mainCoffeeFile);
-  this.write('app/scripts/main.js', this.mainJsFile);
+  if (this.needJS) {
+    this.write('app/scripts/main.js', this.mainJsFile);
+  }
 };
