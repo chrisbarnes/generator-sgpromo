@@ -33,7 +33,9 @@
     "generator-mocha": "~0.1.1"
   },
   "devDependencies": {
-    "mocha": "~1.12.0"
+    "mocha": "~1.12.0",
+    "grunt": "~0.4.2",
+    "grunt-grunticon": "~1.0.0"
   },
   "engines": {
     "node": ">=0.8.0",
