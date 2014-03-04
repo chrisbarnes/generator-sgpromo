@@ -94,15 +94,9 @@ module.exports = function (grunt) {
       dev: {
         files: [{
             expand: true,
-<<<<<<< HEAD
             cwd: '<%%= yeoman.app %>/images',
             src: ['*.svg', '*.png'],
             dest: "<%%= yeoman.app %>/images"
-=======
-            cwd: '<%= yeoman.app %>/images',
-            src: ['*.svg', '*.png'],
-            dest: "<%= yeoman.app %>/images"
->>>>>>> 5eee66d06067637ea9c17995d5bd93e4cfb0172c
         }],
         options: {
           datasvgcss: "icons-data-svg.css",
@@ -114,15 +108,9 @@ module.exports = function (grunt) {
       prod: {
         files: [{
             expand: true,
-<<<<<<< HEAD
             cwd: '<%%= yeoman.app %>/images',
             src: ['*.svg', '*.png'],
             dest: "<%%= yeoman.dist %>/images"
-=======
-            cwd: '<%= yeoman.app %>/images',
-            src: ['*.svg', '*.png'],
-            dest: "<%= yeoman.dist %>/images"
->>>>>>> 5eee66d06067637ea9c17995d5bd93e4cfb0172c
         }],
         options: {
           datasvgcss: "icons-data-svg.css",
@@ -206,13 +194,8 @@ module.exports = function (grunt) {
       }
     },
     usemin: {
-<<<<<<< HEAD
       html: ['<%%= yeoman.dist %>/{,*/}*.html'],
       css: ['<%%= yeoman.dist %>/{,*/}*.css'],
-=======
-      html: ['<%= yeoman.dist %>/{,*/}*.html'],
-      css: ['<%= yeoman.dist %>/styles/{,*/}*.css'],
->>>>>>> 5eee66d06067637ea9c17995d5bd93e4cfb0172c
       options: {
         dirs: ['<%= yeoman.dist %>']
       }
@@ -313,11 +296,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
-<<<<<<< HEAD
       //'grunticon:dev', // uncomment this once there are svg files in the images directory
-=======
-      'grunticon:dev',
->>>>>>> 5eee66d06067637ea9c17995d5bd93e4cfb0172c
       'coffee',
       'less',
       'copy:server',
